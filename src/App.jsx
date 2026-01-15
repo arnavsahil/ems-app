@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
+import { getLocalStorage, setLocalStorage } from "./utils/localStorage";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -24,6 +25,11 @@ const App = () => {
   };
   //handleLogin("admin@me.com", "123");
   // console.log(data);
+
+  useEffect(() => {
+    //setLocalStorage();
+    getLocalStorage();
+  },);
 
   return (
     <>
