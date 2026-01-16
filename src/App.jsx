@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import { getLocalStorage, setLocalStorage } from "./utils/localStorage";
+import { AuthContext } from "./context/AuthProvider";
 
 const App = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
+  const authData = useContext(AuthContext);
+  console.log(authData.employees);
+
+  //console.log(authData && authData.employees.find((e)=>{e.email == email && e.password ==}));
 
   const handleLogin = (email, password) => {
     //console.log(email, password);
@@ -15,7 +21,10 @@ const App = () => {
       setUser("admin");
       navigate("/dash-admin");
       console.log("this is admin");
-    } else if (email == "emp@e.com" && password == "123") {
+    } else if (
+      authData &&
+      authData.employees.find((e) => e.email == email && e.password == password)
+    ) {
       setUser("employee");
       navigate("/dash-employee");
       console.log("this is employee");
@@ -26,10 +35,10 @@ const App = () => {
   //handleLogin("admin@me.com", "123");
   // console.log(data);
 
-  useEffect(() => {
-    //setLocalStorage();
-    getLocalStorage();
-  },);
+  // useEffect(() => {
+  //   //setLocalStorage();
+  //   getLocalStorage();
+  // },);
 
   return (
     <>
