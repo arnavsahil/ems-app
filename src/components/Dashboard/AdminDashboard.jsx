@@ -4,30 +4,45 @@ import { AuthContext } from "../../context/AuthProvider";
 
 const AdminDashboard = () => {
   const [taskTitle, setTaskTitle] = useState("");
-  const [date, setDate] = useState("");
+  const [taskDate, setTaskDate] = useState("");
   const [assignTo, setAssignTo] = useState("");
   const [category, setCategory] = useState("");
-  const [description, setDescription] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
+  const [newTask, setNewTask] = useState({});
   const navigate = useNavigate();
 
   const userData = useContext(AuthContext);
-  console.log(userData.employees);
+  //console.log(userData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("form submitted");
-    console.log(taskTitle);
-    console.log(date);
-    console.log(assignTo);
-    console.log(category);
-    console.log(description);
-    // setTaskTitle("");
-    // setDate("");
-    // setAssignTo("");
-    // setCategory("");
-    // setDescription("");
-  };
+    setNewTask({
+      taskTitle,
+      taskDate,
+      category,
+      taskDescription,
+      active: false,
+      newTask: true,
+      failed: false,
+      completed: false,
+    });
 
+    //console.log(newTask);
+    //const data = userData;
+    // console.log(data);
+    //console.log(userData.employees);
+    userData.employees.forEach((elem) => {
+      console.log("hello");
+
+      if (assignTo == elem.firstName) {
+        elem.tasks.push(newTask);
+        elem.taskCounts.newTask = elem.taskCounts.newTask + 1;
+        console.log(elem.tasks);
+        console.log(elem.taskCounts.newTask);
+      }
+    });
+  };
   const handleLogOut = () => {
     navigate("/login");
   };
@@ -69,9 +84,9 @@ const AdminDashboard = () => {
             <h3 className="text-xs mt-3">Date</h3>
             <input
               type="date"
-              value={date}
+              value={taskDate}
               onChange={(e) => {
-                setDate(e.target.value);
+                setTaskDate(e.target.value);
               }}
               className="mt-1 border text-xs px-2 py-1 w-96 rounded-md"
             />
@@ -101,9 +116,9 @@ const AdminDashboard = () => {
           <div className="flex flex-col">
             <h3 className="text-xs">Description</h3>
             <textarea
-              value={description}
+              value={taskDescription}
               onChange={(e) => {
-                setDescription(e.target.value);
+                setTaskDescription(e.target.value);
               }}
               className="mt-1 border rounded-md text-xs px-2 py-1 w-96 h-32"
             ></textarea>
@@ -128,7 +143,10 @@ const AdminDashboard = () => {
         {userData.employees &&
           userData.employees.map((e, index) => {
             return (
-              <div key={index} className="border-[#54B588] border flex p-2 rounded-md justify-around">
+              <div
+                key={index}
+                className="border-[#54B588] border flex p-2 rounded-md justify-around"
+              >
                 <h4 className="text-sm font-semibold">{e.firstName}</h4>
                 <h4 className="text-sm font-semibold">
                   {e.taskCounts.newTask}
