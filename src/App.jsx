@@ -12,7 +12,7 @@ const App = () => {
   const navigate = useNavigate();
 
   const authData = useContext(AuthContext);
-  console.log(authData.employees);
+  //console.log(authData.employees);
 
   //console.log(authData && authData.employees.find((e)=>{e.email == email && e.password ==}));
 
@@ -62,7 +62,9 @@ const App = () => {
         ></Route>
         <Route
           path="/dash-admin"
-          element={<AdminDashboard></AdminDashboard>}
+          element={
+            <AdminDashboard></AdminDashboard>
+          }
         ></Route>
       </Routes>
     </>

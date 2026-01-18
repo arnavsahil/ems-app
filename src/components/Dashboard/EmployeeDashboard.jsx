@@ -13,6 +13,8 @@ const EmployeeDashboard = ({ loggedEmployee }) => {
     console.log("log out success");
     navigate("/login");
   };
+  //console.log(loggedEmployee.employees);
+  
 
   return (
     <div className="h-screen w-screen bg-black p-10">
